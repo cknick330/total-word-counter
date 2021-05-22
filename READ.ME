@@ -1,0 +1,232 @@
+# Coding Challenge - Total Word Counter
+
+## Description
+This project creates a POST service that accpets a json message with two fields, *id* and *message*
+
+It returns a json document with a single field *count*, that contains the total number of words contained in all the messages received to that point.
+
+
+
+## Requirements
+
+If you do not have a JRE (v8u291 used for development) installed, follow instructions here to download/install:  https://www.oracle.com/java/technologies/javase-downloads.html
+
+If you do not have Gradle (v7.0.2 used for development) installed, follow instructions here to download/install:  https://gradle.org/install/
+
+## Download/Build
+Once the project is downloaded, unzip/extract the contents.
+Using the command prompt, navigate to the parent directory:
+```
+..\\total-word-counter-main\totalWordCounter
+```
+Then, execute the following command to build the project:
+```
+gradle build
+```
+Then, execute the following command to initialize/run the project:
+```
+gradlew bootrun
+```
+Once the project is running, the REST service will be active at the following location:
+```
+http://localhost:8080/totalWordCounter
+``` 
+When you are complete, the service can be stopped with the following command:
+```
+gradlew --stop
+```
+
+## Usage
+### Expected Input
+
+Two fields, *id* and *message*, format shown below:
+```
+{
+	"id":"123",
+	"message": "hello world"
+}
+```
+
+### Expected Output
+One field, *count*, format shown below:
+```
+{
+	"count":"2"
+{
+```
+
+### Examples
+* Note: All of these examples work under the assumption that they are the first requests received after starting the application.
+
+#### Example 1 - Single Request
+Input:
+```
+{
+	"id":"123",
+	"message": "hello world"
+}
+```
+
+Output:
+```
+{
+	"count":"2"
+{
+```
+
+Reason: 
+- *hello* is one word, *world* is another; *count* returns as 2.
+
+#### Example 2 - Multiple Request, Different IDs
+Input:
+```
+{
+	"id":"123",
+	"message": "hello world"
+}
+
+{
+	"id":"456",
+	"message": "again"
+}
+```
+
+Output:
+```
+{
+	"count":"2"
+{
+
+{
+	"count":"3"
+{
+
+```
+Reason: 
+- First request, same reason as Example 1.
+- *456* is different from *123*, *again* is one word; *count* returns as 3 (2 + 1).
+
+#### Example 3 - Multiple Request, Same IDs
+Input:
+```
+{
+	"id":"123",
+	"message": "hello world"
+}
+
+{
+	"id":"123",
+	"message": "again"
+}
+```
+
+Output:
+```
+{
+	"count":"2"
+{
+
+{
+	"count":"2"
+{
+
+```
+Reason: 
+- First request, same reason as Example 1.
+- The second request has the same id as the first, no words are counted; *count* returns the same as 2.
+
+#### Example 4 - Mutiple Request, Different ID and Same Message
+Input:
+```
+{
+	"id":"123",
+	"message": "hello world"
+}
+
+{
+	"id":"456",
+	"message": "hello hello world"
+}
+```
+
+Output:
+```
+{
+	"count":"2"
+{
+
+{
+	"count":"5"
+{
+
+```
+Reason: 
+- First request, same reason as Example 1.
+- *456* is different from *123*; *hello*, *hello*, and *world* are all words; *count* returns as 5 (2 + 3).
+
+
+#### Example 5 - Multiple Request, Same ID, Different Messages
+Input:
+```
+{
+	"id":"123",
+	"message": "hello world"
+}
+
+{
+	"id":"123",
+	"message": "new message"
+}
+```
+
+Output:
+```
+{
+	"count":"2"
+{
+
+{
+	"count":"2"
+{
+
+```
+Reason: 
+- First request, same reason as Example 1.
+- The *id* is the same in the second request, even though the message is different, words are not counted; *count* is unchanged, returns as 2.
+
+#### Example 6 - Definition of a *Word*
+Input:
+```
+{
+	"id":"123",
+	"message": "1st :) two-hearted 42 lol  missspelled        "
+}
+```
+
+Output:
+```
+{
+	"count":"6"
+{
+```
+
+Reason: 
+- Due to there not being a standard definition for the meaning of the word *word*, all of the following are considered words:
+	- 1st
+	- :)
+	- two-hearted
+	- 42
+	- lol
+	- missspelled
+- Therefore, *count* returns as 6.
+
+
+## Status
+Project considered complete for now.
+
+Pending further discussions on the use of this service, additional updates may be made to refine the definition of a word.
+
+
+
+
+# Corey Knick | corey.z.knick@gmail.com
