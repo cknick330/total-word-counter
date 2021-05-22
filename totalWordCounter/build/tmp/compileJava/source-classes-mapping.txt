@@ -1,0 +1,8 @@
+com/example/totalWordCounter/totalWordCounterController.java
+ com.example.totalWordCounter.totalWordCounterController
+com/example/totalWordCounter/requestBody.java
+ com.example.totalWordCounter.requestBody
+com/example/totalWordCounter/TotalWordCounterApplication.java
+ com.example.totalWordCounter.TotalWordCounterApplication
+com/example/totalWordCounter/responseBody.java
+ com.example.totalWordCounter.responseBody
